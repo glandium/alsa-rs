@@ -867,6 +867,7 @@ impl<'a> HwParams<'a> {
     /// This function should only be called when the configuration space contains a single
     /// configuration. Call `PCM::hw_params` to choose a single configuration from the
     /// configuration space.
+    #[cfg(feature = "alsa_1_1")]
     pub fn supports_audio_ts_type(&self, type_: AudioTstampType) -> bool {
         unsafe { alsa::snd_pcm_hw_params_supports_audio_ts_type(self.0, type_ as libc::c_int) != 0 }
     }
@@ -1036,6 +1037,7 @@ impl StatusBuilder {
         StatusBuilder(Status::new())
     }
 
+    #[cfg(feature = "alsa_1_1")]
     pub fn audio_htstamp_config(
         self,
         type_requested: AudioTstampType,
